@@ -182,8 +182,11 @@ int initSubmenuDataItem(GJCType *gjc,char *tokens[]){
     prices[0]=parsedPrice(tokens[3]);
     prices[1]=parsedPrice(tokens[4]);
     prices[2]=parsedPrice(tokens[5]);
-    item->prices=prices;
+    item->prices[0]=prices[0];
+    item->prices[1]=prices[1];
+    item->prices[2]=prices[2];
 
+    printf("%u   %u\n",item->prices[0].dollars,item->prices[0].cents);
 
     strcpy(item->itemDescription,tokens[6]);
 
