@@ -36,10 +36,10 @@
 /* Specifies the maximum input length a user can enter for the options
  menu. */
 #define MAX_OPTION_INPUT 1
-#define MAX_LINE_SIZE 555
+#define MAX_LINE_SIZE 255
 
-#define MAX_TOKENS_MENU 4
-#define MAX_TOKENS_SUBMENU 7 
+#define MAX_TOKENS_MENU 5
+#define MAX_TOKENS_SUBMENU 8 
 
 #define TRUE 1
 #define FALSE 0

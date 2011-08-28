@@ -24,8 +24,26 @@ void displaySummary(GJCType *menu, char categoryType)
     printf("-----------------------\n");
 
     while(i<menu->numCategories){
-	printf("%s\n",cur->categoryID);
-	printf("%s\n",cur->categoryName);
+	int j=0;
+	ItemType *curItem=cur->headItem;
+
+	printf("%s - %s (%d items)\n",cur->categoryID,cur->categoryName,cur->numItems);
+	printf("---------------------------------------\n");
+	printf("ID    Name                 Small  Med   Large\n");
+	printf("----- -------------------  -----  ----- -----\n");
+	
+	while(j<cur->numItems){
+
+	    printf("%s %s             $%d.%d $%d.%d $%d.%d \n",curItem->itemID,curItem->itemName,curItem->prices[0].dollars,curItem->prices[0].cents,curItem->prices[1].dollars,curItem->prices[1].cents,curItem->prices[2].dollars,curItem->prices[2].cents);
+	    j++;
+	    curItem=curItem->nextItem;
+	}
+
+	printf("\n");
+	
+	
+	
+	
 	cur=cur->nextCategory;
 	i++;
     }

@@ -63,12 +63,12 @@ int loadData(GJCType *menu, char *menuFile, char *submenuFile)
 	    initMenuDataItem(menu,tokens);
 
 	}
+	
 	while ( fgets ( line,MAX_LINE_SIZE, submenuPtr ) != NULL ) {
-	    printf("%s\n",line);
 	    char *tokens[MAX_TOKENS_SUBMENU];
 
 	    splitString(tokens,line,"|");
-	    /*initMenuDataItem(menu,tokens);*/
+	    initSubmenuDataItem(menu,tokens);
 
 	}
 	flag=1;
@@ -117,28 +117,32 @@ int splitString(char *tokens[],char *string,char *delimiter){
     while(tokens[i]!=NULL){
 	i++;
 	tokens[i]=strtok(NULL,delimiter);
-	if(tokens[i]==NULL){
-	    printf("stop\n");
-	}else{
-	    printf("%s\n",tokens[i]);
-	}
     }
-    printf("end\n");
     return SUCCESS;
+}
+
+PriceType parsedPrice(char *stringValue){
+    PriceType price;
+    price.dollars=atoi(strtok(stringValue,"."));
+    price.cents=atoi(strtok(NULL,"."));
+    return price;
+
+
 }
 
 int initMenuDataItem(GJCType *gjc, char *tokens[]){
     CategoryType *newCategory=malloc(sizeof(CategoryType));
     CategoryType *cur=gjc->headCategory;
     int i=0;
-
-    if(newCategory==NULL){
-	return FAILURE;
-    }else{
+    
+    if(newCategory!=NULL){
 	strcpy(newCategory->categoryID,tokens[0]);
-	strcpy(newCategory->categoryName,tokens[1]);
-	newCategory->categoryType=tokens[2][0];
+	strcpy(newCategory->categoryName,tokens[2]);
+	newCategory->categoryType=tokens[1][0];
 	strcpy(newCategory->categoryDescription,tokens[3]);
+	newCategory->numItems=0;
+    }else{
+	return FAILURE;
     }
     if(gjc->numCategories==0){
 	gjc->headCategory=newCategory;
@@ -155,4 +159,59 @@ int initMenuDataItem(GJCType *gjc, char *tokens[]){
     return SUCCESS;
 
 }
+
+
+int initSubmenuDataItem(GJCType *gjc,char *tokens[]){
+    ItemType *item=malloc(sizeof(ItemType));
+
+
+    CategoryType *cur=gjc->headCategory;
+    char categoryID[ID_LEN+1];
+    PriceType prices[NUM_PRICES];
+    int i=0;
+
+    if(item==NULL){
+	return FAILURE;
+    }
+
+    strcpy(item->itemID,tokens[0]);
+    strcpy(categoryID,tokens[1]);
+    strcpy(item->itemName,tokens[2]);
+    
+    /*price*/
+    prices[0]=parsedPrice(tokens[3]);
+    prices[1]=parsedPrice(tokens[4]);
+    prices[2]=parsedPrice(tokens[5]);
+    item->prices=prices;
+
+
+    strcpy(item->itemDescription,tokens[6]);
+
+
+    while(i<gjc->numCategories){
+	if(strcmp(cur->categoryID,categoryID)==0){
+	    if(cur->numItems==0){
+		cur->headItem=item;
+		
+	    }else{
+		int j=0;
+		ItemType *curItem=cur->headItem;
+		while(j+1<cur->numItems){
+		    curItem=curItem->nextItem;
+		    j++;
+		}
+		curItem->nextItem=item;
+		
+	    }
+	    cur->numItems+=1;
+	    break;
+	}else{
+	    cur=cur->nextCategory;
+	    i++;
+	}
+    }
+    return SUCCESS;
+
+}
+    
 

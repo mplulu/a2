@@ -22,5 +22,6 @@ void stripNewLine(char*);
 
 int splitString(char *tokens[],char *string,char *delimiter);
 int initMenuDataItem(GJCType *gjc,char *tokens[]);
-int  initSubMenuDataItem(GJCType *gjc,char *tokens[]);
+int  initSubmenuDataItem(GJCType *gjc,char *tokens[]);
+PriceType parsedPrice(char *stringValue);
 #endif
