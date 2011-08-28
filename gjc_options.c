@@ -17,6 +17,18 @@
 ****************************************************************************/
 void displaySummary(GJCType *menu, char categoryType)
 {
+    int i=0;
+    CategoryType *cur=menu->headCategory;
+
+    printf("%s Drinks Summary\n",categoryType==HOT?"Hot":"Cold");
+    printf("-----------------------\n");
+
+    while(i<menu->numCategories){
+	printf("%s\n",cur->categoryID);
+	printf("%s\n",cur->categoryName);
+	cur=cur->nextCategory;
+	i++;
+    }
 }
 
 

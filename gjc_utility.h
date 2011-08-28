@@ -15,6 +15,12 @@ void readRestOfLine();
 int systemInit(GJCType*);
 int loadData(GJCType*, char*, char*);
 void systemFree(GJCType*);
+
+/*my utilities function*/
 int stringIsInRange(char*,int);
 void stripNewLine(char*);
+
+int splitString(char *tokens[],char *string,char *delimiter);
+int initMenuDataItem(GJCType *gjc,char *tokens[]);
+int  initSubMenuDataItem(GJCType *gjc,char *tokens[]);
 #endif

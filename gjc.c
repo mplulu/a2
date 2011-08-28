@@ -13,7 +13,6 @@
 int main(int argc, char* argv[])
 {
     GJCType gjc;
-
     int initFlag, dataFlag;
     char c[MAX_OPTION_INPUT+EXTRA_SPACES];
     /* Initialise the Gloria Jean's Coffee system to a safe empty state. */
@@ -27,15 +26,13 @@ int main(int argc, char* argv[])
     }
 
 
-
     dataFlag = loadData(&gjc, argv[1], argv[2]); 
-
 
     /* Testing to see if both systemInit(.) and loadData(.) are ok */
     if (initFlag == FAILURE || dataFlag == FAILURE){
 	exit(EXIT_FAILURE);
     }
-
+    
 
     /* Interactive menu providing user with access to the 9 menu options */
     printf("Main Menu:\n");
@@ -60,7 +57,7 @@ int main(int argc, char* argv[])
     }else{
 	stripNewLine(c);
 	if(strcmp(c,"1")==0){
-	        
+	    displaySummary(&gjc,'g');	        
 	}else if(strcmp(c,"2")==0){
 	}else if(strcmp(c,"3")==0){
 	}else if(strcmp(c,"4")==0){
